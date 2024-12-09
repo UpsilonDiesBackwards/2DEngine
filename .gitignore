@@ -45,7 +45,7 @@ Makefile
 *.d
 
 # Dependencies
-/vendor/
+vendor
 
 # Other files
 tags

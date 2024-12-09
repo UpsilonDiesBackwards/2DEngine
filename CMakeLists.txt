@@ -5,8 +5,13 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory(vendor/glfw-3.4)
 
+include_directories(vendor)
 include_directories(vendor/glfw-3.4/include)
 
-add_executable(engine main.cpp)
+add_executable(engine
+        main.cpp
+        src/glad/glad.c
+        vendor/glad/glad.h
+)
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)
