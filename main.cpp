@@ -1,38 +1,15 @@
-#include "vendor/glad/glad.h"
-#include <GLFW/glfw3.h>
-
 #include <iostream>
+#include "include/engine/application/application.h"
 
 int main() {
-    if (!glfwInit()) {
-        std::cerr << "Failed to Initialise GLFW!";
-        return 1;
-    }
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    Application application(1920, 1080, "Engine Test");
+    application.Initialise();
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "UwU", NULL, NULL);
-    if (window == NULL)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        glfwTerminate();
-        return -1;
-    }
-    glfwMakeContextCurrent(window);
+    application.Run();
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
+    while (!glfwWindowShouldClose(application.getWindow())) {
     }
 
-    while(!glfwWindowShouldClose(window))
-    {
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
+    application.Terminate();
     return 0;
 }
