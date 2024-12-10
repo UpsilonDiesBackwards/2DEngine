@@ -8,6 +8,7 @@
 #include "GLFW/glfw3.h"
 #include "engine/gui/framebuffer.h"
 #include "engine/gui/gameview.h"
+#include "engine/gui/stylemanager.h"
 
 class Application {
 public:
@@ -24,6 +25,7 @@ private:
     int width, height;
     const char* title;
 
+    StyleManager* style;
     GameView* gameView;
 };
 #endif //ENGINE_APPLICATION_H

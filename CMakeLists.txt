@@ -34,6 +34,8 @@ add_executable(engine
         include/engine/graphics/sprite.h
         src/engine/graphics/shader.cpp
         include/engine/graphics/shader.h
+        src/engine/gui/stylemanager.cpp
+        include/engine/gui/stylemanager.h
 )
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)
