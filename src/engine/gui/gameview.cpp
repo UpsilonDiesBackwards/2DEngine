@@ -3,6 +3,12 @@
 #include "imgui/imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
+#include "glad/glad.h"
+
+/*
+ * We will use a frame buffer to display a texture in a imgui window. this will allow us to have a detachable
+ * view of our game.
+ */
 
 GameView::GameView(int width, int height) : width(width), height(height) { framebuffer = new Framebuffer(width, height); }
 
@@ -10,6 +16,9 @@ GameView::~GameView() { delete framebuffer; }
 
 void GameView::Render() {
     framebuffer->Bind();
+
+    glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // SHIT IN THE GAME VIEW
 

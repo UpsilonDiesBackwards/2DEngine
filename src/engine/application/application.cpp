@@ -17,12 +17,12 @@ Application::~Application() {
 }
 
 void Application::Initialise() {
-    if (!glfwInit()) {
+    if (!glfwInit()) { // Initialise GLFW
         std::cerr << "Failed to Initialise GLFW!" << std::endl;
         return;
     } else std::cout << "GLFW Initialised" << std::endl;
 
-    window = glfwCreateWindow(width, height, title, NULL, NULL);
+    window = glfwCreateWindow(width, height, title, NULL, NULL); // Create the main application window
     if (!window) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -32,13 +32,13 @@ void Application::Initialise() {
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) { // Initialise GLAD
         std::cout << "Failed to initialize GLAD" << std::endl;
         return;
     } else std::cout << "GLAD Initialised" << std::endl;
 
     IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
+    ImGui::CreateContext(); // Create ImGui Context
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 130");
 
@@ -56,8 +56,7 @@ void Application::Run() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    // TODO: GAME SHIT
-    ImGui::ShowStyleEditor();
+    // TODO: EDITOR SHIT
 
     gameView->Render();
 
