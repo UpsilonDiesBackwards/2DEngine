@@ -45,7 +45,7 @@ Makefile
 *.d
 
 # Dependencies
-vendor
+# vendor # I guess we can allow vendor for a bit uwu
 
 # Other files
 tags

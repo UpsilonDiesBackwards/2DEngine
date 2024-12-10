@@ -20,8 +20,14 @@ add_executable(engine
         vendor/imgui/imgui_draw.cpp
         vendor/imgui/imgui_widgets.cpp
         vendor/imgui/imgui_tables.cpp
+        vendor/imgui/imgui_demo.cpp
+        vendor/imgui/imgui_internal.h
         vendor/imgui/backends/imgui_impl_glfw.cpp
         vendor/imgui/backends/imgui_impl_opengl3.cpp
+        src/engine/gui/gameview.cpp
+        include/engine/gui/gameview.h
+        src/engine/gui/framebuffer.cpp
+        include/engine/gui/framebuffer.h
 )
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)

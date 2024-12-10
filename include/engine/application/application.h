@@ -6,6 +6,8 @@
 #define ENGINE_APPLICATION_H
 
 #include "GLFW/glfw3.h"
+#include "engine/gui/framebuffer.h"
+#include "engine/gui/gameview.h"
 
 class Application {
 public:
@@ -21,5 +23,7 @@ private:
     GLFWwindow* window;
     int width, height;
     const char* title;
+
+    GameView* gameView;
 };
 #endif //ENGINE_APPLICATION_H

@@ -1,0 +1,56 @@
+{
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_custom_target"
+		],
+		"files" : 
+		[
+			"vendor/glfw-3.4/docs/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 49,
+				"parent" : 0
+			}
+		]
+	},
+	"folder" : 
+	{
+		"name" : "GLFW3"
+	},
+	"id" : "docs::@9069a670aea32684a524",
+	"name" : "docs",
+	"paths" : 
+	{
+		"build" : "vendor/glfw-3.4/docs",
+		"source" : "vendor/glfw-3.4/docs"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"path" : "vendor/glfw-3.4/docs/html/index.html",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "UTILITY"
+}
