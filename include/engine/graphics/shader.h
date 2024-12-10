@@ -3,6 +3,7 @@
 #define ENGINE_SHADER_H
 
 #include <string>
+#include "glm/glm.hpp"
 
 class Shader {
 public:

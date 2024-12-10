@@ -9,43 +9,40 @@
 Shader::Shader(const char *vPath, const char *fPath) {
     std::string vCode;
     std::string fCode;
+    std::ifstream vFile;
+    std::ifstream fFile;
 
-    std::ifstream vShaderFile;
-    std::ifstream fShaderFile;
-
-    vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    vFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    fFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
     try {
-        vShaderFile.open(vPath);
-        fShaderFile.open(fPath);
-        std::stringstream vShaderStream, fShaderStream;
+        vFile.open(vPath);
+        fFile.open(fPath);
 
-        vShaderStream << vShaderFile.rdbuf();
-        fShaderStream << fShaderFile.rdbuf();
+        std::stringstream vStream, fStream;
+        vStream << vFile.rdbuf();
+        fStream << fFile.rdbuf();
 
-        vShaderFile.close();
-        vShaderFile.close();
+        vFile.close();
+        fFile.close();
 
-        vCode = vShaderStream.str();
-        fCode = fShaderStream.str();
-
-    } catch(std::ifstream::failure e) {
-        std::cout << "Failed to read shader file" << std::endl;
+        vCode = vStream.str();
+        fCode = fStream.str();
+    } catch (std::ifstream::failure& e) {
+        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ: " << e.what() << std::endl;
     }
 
-    const char* vShaderCode = vCode.c_str();
-    const char* fShaderCode = vCode.c_str();
-
+    const char* vSCode = vCode.c_str();
+    const char* fSCode = fCode.c_str();
     unsigned int vertex, fragment;
 
     vertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex, 1, &vShaderCode, nullptr);
+    glShaderSource(vertex, 1, &vSCode, NULL);
     glCompileShader(vertex);
     GetError(vertex, "VERTEX");
 
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &fShaderCode, nullptr);
+    glShaderSource(fragment, 1, &fSCode, NULL);
     glCompileShader(fragment);
     GetError(fragment, "FRAGMENT");
 

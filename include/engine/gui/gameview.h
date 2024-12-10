@@ -12,6 +12,8 @@ public:
 
     void Render();
     void Resize(int width, int height);
+
+    void ShowTriangle();
 private:
     Framebuffer* framebuffer;
     int width, height;
