@@ -1,12 +1,11 @@
+#include <iostream>
 #include "engine/gui/gameview.h"
 #include "engine/gui/framebuffer.h"
 #include "imgui/imgui.h"
-#include "imgui_impl_glfw.h"
-#include "imgui_impl_opengl3.h"
 #include "glad/glad.h"
-#include <GL/glu.h>
-#include <GL/gl.h>
 #include "engine/graphics/shader.h"
+#include "engine/graphics/renderable.h"
+#include "engine/archetypes/entity.h"
 #include "GLFW/glfw3.h"
 
 /*
@@ -24,15 +23,13 @@ void GameView::Render() {
     float aRatio = static_cast<float>(width) / static_cast<float>(height);
 
     glViewport(0, 0, width, height);
-    glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+    glClearColor(0.49f, 0.73f, 0.70f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // SHIT IN THE GAME VIEW
-    ShowTriangle();
 
     framebuffer->Unbind();
 
-    ImGui::Begin("Game View", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
     ImVec2 winSize = ImGui::GetContentRegionAvail();
     float wRatio = winSize.x / winSize.y;
 
@@ -52,7 +49,6 @@ void GameView::Render() {
     }
 
     ImGui::Image(framebuffer->GetTexture(), ImVec2(winSize.x, winSize.y), ImVec2(0, 1), ImVec2(1, 0));
-    ImGui::End();
 }
 
 void GameView::Resize(int width, int height) {
@@ -69,8 +65,8 @@ void GameView::ShowTriangle() {
             0.5f, -0.5f, 0.0f   // bottom right vertex
     };
 
-    Shader shader("/home/tayler/projects/2DEngine/res/shaders/shader.vert",
-                  "/home/tayler/projects/2DEngine/res/shaders/shader.frag");
+    Shader shader("../res/shaders/shader.vert",
+                  "../res/shaders/shader.frag");
 
     unsigned int VAO, VBO;
     glGenVertexArrays(1, &VAO);

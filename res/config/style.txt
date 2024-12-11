@@ -56,7 +56,7 @@ Color 54 0.8 0.8 0.8 0.2
 Color 55 0.8 0.8 0.8 0.35
 Alpha 1
 DisabledAlpha 0.6
-WindowPadding 8 8
+WindowPadding 6 6
 WindowRounding 10
 WindowBorderSize 0
 WindowMinSize 32 32

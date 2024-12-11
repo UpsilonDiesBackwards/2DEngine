@@ -28,14 +28,16 @@ add_executable(engine
         include/engine/gui/gameview.h
         src/engine/gui/framebuffer.cpp
         include/engine/gui/framebuffer.h
-        src/engine/archetypes/gameobject.cpp
-        include/engine/archetypes/gameobject.h
-        src/engine/graphics/sprite.cpp
-        include/engine/graphics/sprite.h
         src/engine/graphics/shader.cpp
         include/engine/graphics/shader.h
         src/engine/gui/stylemanager.cpp
         include/engine/gui/stylemanager.h
+        src/engine/gui/editview.cpp
+        include/engine/gui/editview.h
+        src/engine/archetypes/entity.cpp
+        include/engine/archetypes/entity.h
+        src/engine/graphics/renderable.cpp
+        include/engine/graphics/renderable.h
 )
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)

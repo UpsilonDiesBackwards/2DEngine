@@ -10,6 +10,9 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "engine/gui/stylemanager.h"
+#include "engine/gui/editview.h"
+#include "engine/graphics/renderable.h"
+#include "engine/archetypes/entity.h"
 
 Application::Application(int width, int height, const char *title) :
     window(nullptr), width(width), height(height), title(title) {};
@@ -42,15 +45,18 @@ void Application::Initialise() {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext(); // Create ImGui Context
     ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 130");
+    ImGui_ImplOpenGL3_Init("#version 330");
 
     // Load ImGui custom style
-    style = new StyleManager("/home/tayler/projects/2DEngine/res/config/style.txt");
+    style = new StyleManager("../res/config/style.txt");
     style->LoadStyle();
 
     glEnable(GL_DEPTH_TEST);
 
     gameView = new GameView(width, height);
+    editView = new EditView(width, height);
+
+
 }
 
 void Application::Run() {
@@ -61,11 +67,33 @@ void Application::Run() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    // TODO: EDITOR SHIT
-    ImGui::ShowDemoWindow();
-    ImGui::ShowStyleEditor();
+    // TODO: EDITOR STUFF
+    ImGui::Begin("Editor");
+    if (ImGui::BeginTabBar("Views")) {
+        ImGui::SameLine(ImGui::GetContentRegionAvail().x - 40);
+        if (playState == PlayState::Play) {
+            if (ImGui::Button("Stop")) {
+                playState = PlayState::Stop;
+                std::cout << "Stop button clicked!" << std::endl;
+            }
+        } else {
+            if (ImGui::Button("Play")) {
+                playState = PlayState::Play;
+                std::cout << "Play button clicked!" << std::endl;
+            }
+        }
 
-    gameView->Render();
+        if (ImGui::BeginTabItem("Edit")) {
+            editView->Render();
+            ImGui::EndTabItem();
+        }
+        if (ImGui::BeginTabItem("Game")) {
+            gameView->Render();
+            ImGui::EndTabItem();
+        }
+        ImGui::EndTabBar();
+    }
+    ImGui::End();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -76,6 +104,7 @@ void Application::Run() {
 
 void Application::Terminate() {
     style->SaveStyle();
+    delete editView;
     delete gameView;
 
     ImGui_ImplOpenGL3_Shutdown();
