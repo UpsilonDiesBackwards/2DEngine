@@ -4,6 +4,8 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "glad/glad.h"
+#include <GL/glu.h>
+#include <GL/gl.h>
 #include "engine/graphics/shader.h"
 #include "GLFW/glfw3.h"
 
@@ -19,6 +21,8 @@ GameView::~GameView() { delete framebuffer; }
 void GameView::Render() {
     framebuffer->Bind();
 
+    float aRatio = static_cast<float>(width) / static_cast<float>(height);
+
     glViewport(0, 0, width, height);
     glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -30,12 +34,24 @@ void GameView::Render() {
 
     ImGui::Begin("Game View", nullptr, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
     ImVec2 winSize = ImGui::GetContentRegionAvail();
+    float wRatio = winSize.x / winSize.y;
+
     if (winSize.x != width || winSize.y != height) {
         width = static_cast<int>(winSize.x);
         height = static_cast<int>(winSize.y);
         Resize(width, height);
     }
-    ImGui::Image(framebuffer->GetTexture(), winSize, ImVec2(0, 1), ImVec2(1, 0));
+
+    // Retain Aspect Ratio
+    if (wRatio > aRatio) {
+        width = static_cast<int>(winSize.y * aRatio);
+        height = static_cast<int>(winSize.y);
+    } else {
+        width = static_cast<int>(winSize.x);
+        height = static_cast<int>(winSize.x / aRatio);
+    }
+
+    ImGui::Image(framebuffer->GetTexture(), ImVec2(winSize.x, winSize.y), ImVec2(0, 1), ImVec2(1, 0));
     ImGui::End();
 }
 
