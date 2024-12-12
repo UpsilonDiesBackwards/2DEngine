@@ -49,6 +49,9 @@ void Application::Initialise() {
     style = new StyleManager("../res/config/style.txt");
     style->LoadStyle();
 
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigWindowsMoveFromTitleBarOnly = true;
+
     glEnable(GL_DEPTH_TEST);
 
     gameView = new GameView(width, height);
