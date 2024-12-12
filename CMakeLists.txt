@@ -40,6 +40,11 @@ add_executable(engine
         include/engine/graphics/renderable.h
         src/engine/gui/imgui/editorviews.cpp
         include/engine/gui/editorviews.h
+        include/engine/gui/imgui/editorviews.h
+        src/engine/gui/imgui/topbar.cpp
+        include/engine/gui/imgui/topbar.h
+        src/engine/gui/imgui/editorviewstatusbar.cpp
+        include/engine/gui/imgui/editorviewstatusbar.h
 )
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)

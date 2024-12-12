@@ -53,6 +53,8 @@ void Application::Initialise() {
 
     gameView = new GameView(width, height);
     editView = new EditView(width, height);
+
+    topBar = new TopBar();
 }
 
 void Application::Run() {
@@ -64,10 +66,11 @@ void Application::Run() {
     ImGui::NewFrame();
 
     // TODO: EDITOR STUFF
-    ImGui::ShowDemoWindow();
 
     EditorViews* editorViews = new EditorViews;
     editorViews->Show(this);
+
+    topBar->Show(style);
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -77,7 +80,6 @@ void Application::Run() {
 }
 
 void Application::Terminate() {
-    style->SaveStyle();
     delete editView;
     delete gameView;
 

@@ -11,6 +11,7 @@
 #include "engine/gui/gameview.h"
 #include "engine/gui/stylemanager.h"
 #include "engine/gui/editview.h"
+#include "engine/gui/imgui/topbar.h"
 
 enum PlayState {
     Play, Stop,
@@ -36,5 +37,6 @@ private:
     const char* title;
 
     StyleManager* style;
+    TopBar* topBar;
 };
 #endif //ENGINE_APPLICATION_H
