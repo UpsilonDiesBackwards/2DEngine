@@ -1,8 +1,13 @@
 
+#include <iostream>
 #include "engine/archetypes/entity.h"
 
-Entity::Entity(const std::string &name, EntityFlags flags, const Renderable &renderable, glm::vec2 position)
-    : name(name), flags(flags), renderable(renderable), position(position) {
+Entity::Entity(const std::string &name, EntityFlags flags, glm::vec2 position)
+    : name(name), flags(flags), position(position) {
+
+    renderable = new Renderable(0,0,0,0);
+    renderable->Initialise();
+    Render();
 }
 
 glm::vec2 Entity::getPosition() {
@@ -14,7 +19,7 @@ glm::vec2 Entity::setPosition(glm::vec2 newPos) {
 }
 
 void Entity::Render() {
-    if (ACTIVE && RENDERABLE) {
-        renderable.Draw();
+    if (RENDERABLE) {
+        renderable->Draw();
     }
 }

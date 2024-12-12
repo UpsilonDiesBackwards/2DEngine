@@ -21,7 +21,7 @@ void EditorViews::Show(Application* application) {
         }
 
         if (ImGui::BeginTabItem("Edit")) {
-            application->editView->Render();
+            application->gameView->Render();
             ImGui::EndTabItem();
         }
         if (ImGui::BeginTabItem("Game")) {

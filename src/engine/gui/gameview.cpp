@@ -9,7 +9,7 @@
 #include "GLFW/glfw3.h"
 
 /*
- * We will use a frame buffer to display a texture in a imgui window. this will allow us to have a detachable
+ * We will use a frame buffer to display a texture in an imgui window. this will allow us to have a detachable
  * view of our game.
  */
 
@@ -27,6 +27,7 @@ void GameView::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // SHIT IN THE GAME VIEW
+    Entity *entity = new Entity("entity", EntityFlags::RENDERABLE, glm::vec2(0,0));
 
     framebuffer->Unbind();
 

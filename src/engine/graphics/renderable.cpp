@@ -1,14 +1,17 @@
 
+#include <iostream>
 #include "engine/graphics/renderable.h"
 #include "engine/graphics/shader.h"
 #include "glad/glad.h"
 
 float rectVertices[] = {
-        0.5f,  0.5f,  1.0f, 1.0f, // top right
-        0.5f, -0.5f,  1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f,  0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f,  0.0f, 1.0f  // top left
+        // Positions       // Texture Coords
+        -0.5f,  0.5f, 0.0f,  // Top-left corner   (0.0f, 1.0f)
+        0.5f,  0.5f, 0.0f,  // Top-right corner  (1.0f, 1.0f)
+        0.5f, -0.5f, 0.0f,  // Bottom-right      (1.0f, 0.0f)
+        -0.5f, -0.5f, 0.0f   // Bottom-left       (0.0f, 0.0f)
 };
+
 
 int rectIndices[] = {
         0, 1, 3,
@@ -49,7 +52,8 @@ void Renderable::Draw() {
         glBindTexture(GL_TEXTURE_2D, texture);
     }
 
-    glDrawElements(GL_TRIANGLES, sizeof(rectIndices), GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, sizeof(rectIndices)/4, GL_UNSIGNED_INT, nullptr);
+
 
     glBindVertexArray(0);
 }

@@ -66,6 +66,7 @@ void Application::Run() {
     ImGui::NewFrame();
 
     // TODO: EDITOR STUFF
+    ImGui::ShowDemoWindow();
 
     EditorViews* editorViews = new EditorViews;
     editorViews->Show(this);
