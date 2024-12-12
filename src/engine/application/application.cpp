@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include <X11/Xutil.h>
 #include "glad/glad.h"
 #include "engine/application/application.h"
 #include "imgui/imgui.h"
@@ -11,8 +10,7 @@
 #include "imgui_impl_opengl3.h"
 #include "engine/gui/stylemanager.h"
 #include "engine/gui/editview.h"
-#include "engine/graphics/renderable.h"
-#include "engine/archetypes/entity.h"
+#include "engine/gui/editorviews.h"
 
 Application::Application(int width, int height, const char *title) :
     window(nullptr), width(width), height(height), title(title) {};
@@ -55,8 +53,6 @@ void Application::Initialise() {
 
     gameView = new GameView(width, height);
     editView = new EditView(width, height);
-
-
 }
 
 void Application::Run() {
@@ -68,32 +64,11 @@ void Application::Run() {
     ImGui::NewFrame();
 
     // TODO: EDITOR STUFF
-    ImGui::Begin("Editor");
-    if (ImGui::BeginTabBar("Views")) {
-        ImGui::SameLine(ImGui::GetContentRegionAvail().x - 40);
-        if (playState == PlayState::Play) {
-            if (ImGui::Button("Stop")) {
-                playState = PlayState::Stop;
-                std::cout << "Stop button clicked!" << std::endl;
-            }
-        } else {
-            if (ImGui::Button("Play")) {
-                playState = PlayState::Play;
-                std::cout << "Play button clicked!" << std::endl;
-            }
-        }
+    ImGui::ShowDemoWindow();
 
-        if (ImGui::BeginTabItem("Edit")) {
-            editView->Render();
-            ImGui::EndTabItem();
-        }
-        if (ImGui::BeginTabItem("Game")) {
-            gameView->Render();
-            ImGui::EndTabItem();
-        }
-        ImGui::EndTabBar();
-    }
-    ImGui::End();
+    EditorViews* editorViews = new EditorViews;
+
+    editorViews->Show(this);
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

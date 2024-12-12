@@ -28,13 +28,13 @@ public:
     GLFWwindow* getWindow();
 
     PlayState playState = PlayState::Stop;
+    EditView* editView;
+    GameView* gameView;
 private:
     GLFWwindow* window;
     int width, height;
     const char* title;
 
     StyleManager* style;
-    EditView* editView;
-    GameView* gameView;
 };
 #endif //ENGINE_APPLICATION_H

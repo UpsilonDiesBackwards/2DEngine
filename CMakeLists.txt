@@ -38,6 +38,8 @@ add_executable(engine
         include/engine/archetypes/entity.h
         src/engine/graphics/renderable.cpp
         include/engine/graphics/renderable.h
+        src/engine/gui/editorviews.cpp
+        include/engine/gui/editorviews.h
 )
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)
