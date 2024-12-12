@@ -67,7 +67,6 @@ void Application::Run() {
     ImGui::ShowDemoWindow();
 
     EditorViews* editorViews = new EditorViews;
-
     editorViews->Show(this);
 
     ImGui::Render();

@@ -38,7 +38,7 @@ add_executable(engine
         include/engine/archetypes/entity.h
         src/engine/graphics/renderable.cpp
         include/engine/graphics/renderable.h
-        src/engine/gui/editorviews.cpp
+        src/engine/gui/imgui/editorviews.cpp
         include/engine/gui/editorviews.h
 )
 
