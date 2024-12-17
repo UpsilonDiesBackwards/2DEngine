@@ -44,6 +44,9 @@ public:
     glm::vec2 getScale();
     glm::vec2 setScale(glm::vec2 newScale);
 
+    template<typename... TArgs>
+    void addChild(const TArgs&... args);
+
     void Render();
 };
 

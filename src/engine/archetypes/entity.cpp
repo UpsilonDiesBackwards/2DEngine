@@ -40,3 +40,9 @@ glm::vec2 Entity::getScale() {
 glm::vec2 Entity::setScale(glm::vec2 newScale) {
     transform.scale = newScale;
 }
+
+template<typename... TArgs>
+void Entity::addChild(const TArgs &... args) {
+    children->emplace_back(std::make_unique<Entity>(args...));
+    children->back()->parent = this;
+}
