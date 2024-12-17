@@ -1,9 +1,9 @@
 
-if (NOT EXISTS "/home/tayler/CLionProjects/engine/cmake-build-debug/vendor/glfw-3.4/install_manifest.txt")
-    message(FATAL_ERROR "Cannot find install manifest: \"/home/tayler/CLionProjects/engine/cmake-build-debug/vendor/glfw-3.4/install_manifest.txt\"")
+if (NOT EXISTS "/home/tayler/projects/2DEngine/cmake-build-debug/vendor/glfw-3.4/install_manifest.txt")
+    message(FATAL_ERROR "Cannot find install manifest: \"/home/tayler/projects/2DEngine/cmake-build-debug/vendor/glfw-3.4/install_manifest.txt\"")
 endif()
 
-file(READ "/home/tayler/CLionProjects/engine/cmake-build-debug/vendor/glfw-3.4/install_manifest.txt" files)
+file(READ "/home/tayler/projects/2DEngine/cmake-build-debug/vendor/glfw-3.4/install_manifest.txt" files)
 string(REGEX REPLACE "\n" ";" files "${files}")
 
 foreach (file ${files})

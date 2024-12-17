@@ -3,8 +3,9 @@
 #define ENGINE_ENTITY_H
 
 #include <string>
-#include <glm/vec3.hpp>
-#include <glm/vec2.hpp>
+#include <vector>
+#include <glm/mat4x4.hpp>
+#include <memory>
 #include "engine/graphics/renderable.h"
 
 enum EntityFlags {
@@ -14,17 +15,34 @@ enum EntityFlags {
     RENDERABLE = 1 << 4,
 };
 
+struct Transform {
+    glm::vec2 pos = {0.0f, 0.0f};
+    glm::vec2 eulerRot = {0.0f, 0.0f};
+    glm::vec2 scale = {1.0f, 1.0f};
+
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
+};
+
 struct Entity {
 public:
     std::string name;
     EntityFlags flags;
     Renderable* renderable;
-    glm::vec2 position;
+    Transform transform;
 
-    Entity(const std::string& name, EntityFlags flags, glm::vec2 position);
+    Entity* parent = nullptr;
+    std::vector<std::unique_ptr<Entity>>* children;
+
+    Entity(const std::string& name, EntityFlags flags, Transform* transform);
 
     glm::vec2 getPosition();
     glm::vec2 setPosition(glm::vec2 newPos);
+
+    glm::vec2 getEulerRot();
+    glm::vec2 setEulerRot(glm::vec2 newRot);
+
+    glm::vec2 getScale();
+    glm::vec2 setScale(glm::vec2 newScale);
 
     void Render();
 };
