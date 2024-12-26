@@ -45,6 +45,12 @@ add_executable(engine
         include/engine/gui/imgui/topbar.h
         src/engine/gui/imgui/editorviewstatusbar.cpp
         include/engine/gui/imgui/editorviewstatusbar.h
+        src/engine/archetypes/camera.cpp
+        include/engine/archetypes/camera.h
+        src/engine/io/inputmanager.cpp
+        include/engine/io/inputmanager.h
+        src/engine/io/input.cpp
+        include/engine/io/input.h
 )
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)

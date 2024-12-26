@@ -2,18 +2,17 @@
 #include <iostream>
 #include "engine/archetypes/entity.h"
 
-Entity::Entity(const std::string &name, EntityFlags flags, Transform* transform)
-    : name(name), flags(flags), transform(*transform) {
+Entity::Entity(const std::string &name, EntityFlags flags, Transform transform)
+    : name(name), flags(flags), transform(transform), renderable(0,0,0,0) {
 
-    renderable = new Renderable(0,0,0,0);
-    renderable->Initialise();
+    renderable.Initialise();
 
     Render();
 }
 
 void Entity::Render() {
     if (RENDERABLE) {
-        renderable->Draw();
+        renderable.Draw();
     }
 }
 

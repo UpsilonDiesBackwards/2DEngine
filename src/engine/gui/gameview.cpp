@@ -26,11 +26,11 @@ void GameView::Render() {
     glClearColor(0.49f, 0.73f, 0.70f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // SHIT IN THE GAME VIEW
+    // RENDER IN THE GAME VIEW
 //    Entity *entity = new Entity("entity", EntityFlags::RENDERABLE, new Transform);
 
-    Transform* tra = new Transform;
-    tra->eulerRot = glm::vec2(200, 3);
+    Transform tra;
+    tra.eulerRot = glm::vec2(200, 3);
     Entity *entity2 = new Entity("entity", EntityFlags::RENDERABLE, tra);
 
     framebuffer->Unbind();

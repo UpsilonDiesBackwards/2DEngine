@@ -1,7 +1,3 @@
-//
-// Created by tayler on 09/12/24.
-//
-
 #include <iostream>
 #include "glad/glad.h"
 #include "engine/application/application.h"
@@ -11,12 +7,17 @@
 #include "engine/gui/stylemanager.h"
 #include "engine/gui/editview.h"
 #include "engine/gui/editorviews.h"
+#include "engine/io/input.h"
 
 Application::Application(int width, int height, const char *title) :
-    window(nullptr), width(width), height(height), title(title) {};
+    window(nullptr), width(width), height(height), title(title), inputManager(InputManager::GetInstance()), input(&inputManager) { };
 
 Application::~Application() {
     Terminate();
+}
+
+void UwU() {
+    std::cout << "UwU" << std::endl;
 }
 
 void Application::Initialise() {
@@ -34,6 +35,10 @@ void Application::Initialise() {
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
+
+    inputManager.SetWindow(window);
+
+    input.BindKey(GLFW_KEY_U, UwU);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) { // Initialise GLAD
         std::cout << "Failed to initialize GLAD" << std::endl;
@@ -68,8 +73,11 @@ void Application::Run() {
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
+
     // TODO: EDITOR STUFF
-    ImGui::ShowDemoWindow();
+//    ImGui::ShowStyleEditor();
+
+    input.Update();
 
     EditorViews* editorViews = new EditorViews;
     editorViews->Show(this);
@@ -79,8 +87,8 @@ void Application::Run() {
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-    glfwSwapBuffers(window);
     glfwPollEvents();
+    glfwSwapBuffers(window);
 }
 
 void Application::Terminate() {

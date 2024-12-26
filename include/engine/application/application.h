@@ -12,6 +12,8 @@
 #include "engine/gui/stylemanager.h"
 #include "engine/gui/editview.h"
 #include "engine/gui/imgui/topbar.h"
+#include "engine/io/inputmanager.h"
+#include "engine/io/input.h"
 
 enum PlayState {
     Play, Stop,
@@ -31,6 +33,9 @@ public:
     PlayState playState = PlayState::Stop;
     EditView* editView;
     GameView* gameView;
+
+    InputManager& inputManager;
+    Input input;
 private:
     GLFWwindow* window;
     int width, height;

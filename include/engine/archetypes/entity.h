@@ -27,13 +27,13 @@ struct Entity {
 public:
     std::string name;
     EntityFlags flags;
-    Renderable* renderable;
+    Renderable renderable;
     Transform transform;
 
     Entity* parent = nullptr;
     std::vector<std::unique_ptr<Entity>>* children;
 
-    Entity(const std::string& name, EntityFlags flags, Transform* transform);
+    Entity(const std::string& name, EntityFlags flags, Transform transform);
 
     glm::vec2 getPosition();
     glm::vec2 setPosition(glm::vec2 newPos);
