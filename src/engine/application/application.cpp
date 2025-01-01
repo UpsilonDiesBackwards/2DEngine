@@ -16,10 +16,6 @@ Application::~Application() {
     Terminate();
 }
 
-void UwU() {
-    std::cout << "UwU" << std::endl;
-}
-
 void Application::Initialise() {
     if (!glfwInit()) { // Initialise GLFW
         std::cerr << "Failed to Initialise GLFW!" << std::endl;
@@ -37,8 +33,6 @@ void Application::Initialise() {
     glfwSwapInterval(1);
 
     inputManager.SetWindow(window);
-
-    input.BindKey(GLFW_KEY_U, UwU);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) { // Initialise GLAD
         std::cout << "Failed to initialize GLAD" << std::endl;
@@ -72,7 +66,6 @@ void Application::Run() {
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
-
 
     // TODO: EDITOR STUFF
 //    ImGui::ShowStyleEditor();

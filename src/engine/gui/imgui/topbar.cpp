@@ -23,11 +23,20 @@ void TopBar::Show(StyleManager* styleManager) {
         }
 
         if (ImGui::BeginMenu("Settings")) {
+            static bool showStyleEditor = false;
             if (ImGui::MenuItem("Style Editor")) {
                 ImGui::ShowStyleEditor();
             }
+            if (ImGui::BeginPopup("Style Editor")) {
+                showStyleEditor = !showStyleEditor;
+                ImGui::EndPopup();
+            }
+            if (showStyleEditor) {
+                ImGui::Begin("Style Editor", &showStyleEditor);
+                ImGui::ShowStyleEditor();
+                ImGui::End();
+            }
             ImGui::EndMenu();
-
         }
 
         if (ImGui::BeginMenu("Window")) {

@@ -8,10 +8,11 @@ class Renderable {
 public:
     Renderable(uint VAO, uint VBO, uint EBO, uint texture);
     void Initialise(); // Buffer Setup
-    void Draw();
+    void Draw(const glm::mat4 modelMatrix);
 private:
     uint VAO, VBO, EBO;
     uint texture;
+    glm::mat4 perspectiveMatrix;
 };
 
 

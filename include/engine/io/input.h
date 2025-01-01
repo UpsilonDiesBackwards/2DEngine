@@ -11,16 +11,22 @@
 
 class InputManager;
 
+enum KeyEventType {
+    KEY_DOWN,
+    KEY_UP,
+    KEY_PRESSED
+};
+
 class Input {
 public:
     Input(InputManager* inputManager);
 
-    void BindKey(int key, std::function<void()> action);
+    void BindKey(int key, KeyEventType eventType, std::function<void()> action);
 
     void Update();
 private:
     InputManager* inputManager;
-    std::map<int, std::function<void()>> keybinds;
+    std::map<std::pair<int, KeyEventType>, std::function<void()>> keybinds;
 };
 
 

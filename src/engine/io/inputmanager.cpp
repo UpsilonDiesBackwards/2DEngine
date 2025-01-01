@@ -40,7 +40,7 @@ bool InputManager::isKeyPressed(int key) {
 }
 
 bool InputManager::isKeyDown(int key) {
-    return keys[key] && !prevKeys[key];
+    return keys[key] && prevKeys[key];
 }
 
 bool InputManager::isKeyUp(int key) {

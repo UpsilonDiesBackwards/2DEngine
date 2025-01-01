@@ -12,7 +12,7 @@ Entity::Entity(const std::string &name, EntityFlags flags, Transform transform)
 
 void Entity::Render() {
     if (RENDERABLE) {
-        renderable.Draw();
+        renderable.Draw(transform.modelMatrix);
     }
 }
 

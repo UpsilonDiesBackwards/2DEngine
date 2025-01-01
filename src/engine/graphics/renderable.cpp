@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <glm/gtc/type_ptr.hpp>
 #include "engine/graphics/renderable.h"
 #include "engine/graphics/shader.h"
 #include "glad/glad.h"
@@ -18,7 +19,8 @@ int rectIndices[] = {
         1, 2, 3
 };
 
-Renderable::Renderable(GLuint VAO, GLuint VBO, GLuint EBO, GLuint texture) : VAO(0), VBO(0), EBO(0), texture(0) {
+Renderable::Renderable(GLuint VAO, GLuint VBO, GLuint EBO, GLuint texture) : VAO(VAO), VBO(VBO), EBO(EBO), texture(texture) {
+    perspectiveMatrix = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
 }
 
 void Renderable::Initialise() {
@@ -29,7 +31,7 @@ void Renderable::Initialise() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(rectVertices), rectVertices, GL_STATIC_DRAW);
 
-    glGenVertexArrays(1, &EBO);
+    glGenBuffers(1, &EBO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(rectIndices), rectIndices, GL_STATIC_DRAW);
 
@@ -38,10 +40,9 @@ void Renderable::Initialise() {
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Renderable::Draw() {
+void Renderable::Draw(const glm::mat4 modelMatrix) {
     glBindVertexArray(VAO);
 
     Shader shader("../res/shaders/shader.vert",
@@ -52,8 +53,13 @@ void Renderable::Draw() {
         glBindTexture(GL_TEXTURE_2D, texture);
     }
 
-    glDrawElements(GL_TRIANGLES, sizeof(rectIndices)/4, GL_UNSIGNED_INT, nullptr);
+    GLint modelLoc = glGetUniformLocation(shader.ID, "model");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
 
+    GLint perspectiveLoc = glGetUniformLocation(shader.ID, "perspective");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(perspectiveMatrix));
+
+    glDrawElements(GL_TRIANGLES, sizeof(rectIndices)/4, GL_UNSIGNED_INT, nullptr);
 
     glBindVertexArray(0);
 }

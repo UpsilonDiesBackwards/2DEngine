@@ -30,7 +30,6 @@ glm::mat4 Camera::GetProjection() const {
     float bottom = position.y - (height / 2.0f) / zoom;
     float top = position.y + (height / 2.0f) / zoom;
 
-
     return glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 }
 
