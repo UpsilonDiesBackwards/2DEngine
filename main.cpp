@@ -1,7 +1,7 @@
 #include "include/engine/application/application.h"
 
 int main() {
-    Application application(1920, 1080, "Engine Test");
+    Application& application = Application::GetInstance(1920, 1080, "Engine Test");
     application.Initialise();
 
     while (!glfwWindowShouldClose(application.getWindow())) {

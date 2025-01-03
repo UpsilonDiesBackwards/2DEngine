@@ -51,6 +51,8 @@ add_executable(engine
         include/engine/io/inputmanager.h
         src/engine/io/input.cpp
         include/engine/io/input.h
+        src/engine/application/profiler.cpp
+        include/engine/application/profiler.h
 )
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)

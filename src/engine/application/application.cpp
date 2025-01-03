@@ -10,7 +10,12 @@
 #include "engine/io/input.h"
 
 Application::Application(int width, int height, const char *title) :
-    window(nullptr), width(width), height(height), title(title), inputManager(InputManager::GetInstance()), input(&inputManager) { };
+    window(nullptr), width(width), height(height), title(title), inputManager(InputManager::GetInstance()),
+    input(&inputManager), camera(new Camera(1920, 1080, 1)) {
+
+    profiler = new Profiler();
+    editorViews = new EditorViews;
+};
 
 Application::~Application() {
     Terminate();
@@ -42,7 +47,7 @@ void Application::Initialise() {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext(); // Create ImGui Context
     ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL3_Init("#version 330");
+    ImGui_ImplOpenGL3_Init("#version 430");
 
     // Load ImGui custom style
     style = new StyleManager("../res/config/style.txt");
@@ -50,6 +55,8 @@ void Application::Initialise() {
 
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigWindowsMoveFromTitleBarOnly = true;
+    io.ConfigFlags |= ImGuiConfigFlags_None;
+    ImFont* font = io.Fonts->AddFontFromFileTTF("../res/fonts/monofur/monof55.ttf", 16);
 
     glEnable(GL_DEPTH_TEST);
 
@@ -60,6 +67,8 @@ void Application::Initialise() {
 }
 
 void Application::Run() {
+    profiler->Update();
+
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -72,10 +81,9 @@ void Application::Run() {
 
     input.Update();
 
-    EditorViews* editorViews = new EditorViews;
-    editorViews->Show(this);
+    editorViews->Show();
 
-    topBar->Show(style);
+    topBar->Show(style, profiler);
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -85,8 +93,12 @@ void Application::Run() {
 }
 
 void Application::Terminate() {
+    delete editorViews;
     delete editView;
     delete gameView;
+    delete style;
+
+    delete profiler;
 
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
@@ -98,4 +110,8 @@ void Application::Terminate() {
 
 GLFWwindow *Application::getWindow() {
     return window;
+}
+
+Camera *Application::getCamera() {
+    return camera;
 }

@@ -1,4 +1,6 @@
 #include <iostream>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 #include "engine/gui/gameview.h"
 #include "engine/gui/framebuffer.h"
 #include "imgui/imgui.h"
@@ -28,8 +30,8 @@ void GameView::Render() {
 
     // RENDER IN THE GAME VIEW
 
-    Transform trans;
-    Entity *entity = new Entity("entity", EntityFlags::RENDERABLE, trans);
+//    Transform trans;
+//    Entity *entity = new Entity("entity", EntityFlags::RENDERABLE, trans);
 
     framebuffer->Unbind();
 
@@ -59,37 +61,4 @@ void GameView::Resize(int width, int height) {
     this->height = height;
 
     framebuffer->Resize(width, height);
-}
-
-void GameView::ShowTriangle() {
-    float vertices[] = {
-            0.0f,  0.5f, 0.0f,  // top vertex
-            -0.5f, -0.5f, 0.0f,  // bottom left vertex
-            0.5f, -0.5f, 0.0f   // bottom right vertex
-    };
-
-    Shader shader("../res/shaders/shader.vert",
-                  "../res/shaders/shader.frag");
-
-    unsigned int VAO, VBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindVertexArray(0);
-
-    shader.Use();
-    glBindVertexArray(VAO);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-
-    glBindVertexArray(0);
 }

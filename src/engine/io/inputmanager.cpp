@@ -67,6 +67,15 @@ double InputManager::getMouseY() {
     return mouseY;
 }
 
+double InputManager::getMouseDeltaX() const {
+    return mouseDeltaX;
+}
+
+double InputManager::getMouseDeltaY() const {
+    return mouseDeltaY;
+}
+
+
 void InputManager::Update() {
     for (int i = 0; i < 512; i++) {
         prevKeys[i] = keys[i];
@@ -75,6 +84,12 @@ void InputManager::Update() {
     for (int i = 0; i < 8; ++i) {
         prevMouseButtons[i] = mouseButtons[i];
     }
+
+    mouseDeltaX = mouseX - prevMouseX;
+    mouseDeltaY = mouseY - prevMouseY;
+
+    prevMouseX = mouseX;
+    prevMouseY = mouseY;
 }
 
 void InputManager::initKeyCallbacks() {

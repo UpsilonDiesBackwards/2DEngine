@@ -3,6 +3,8 @@
 #define ENGINE_RENDERABLE_H
 
 #include <cstdlib>
+#include <glm/ext/matrix_float4x4.hpp>
+#include <glm/mat4x4.hpp>
 
 class Renderable {
 public:
@@ -12,7 +14,7 @@ public:
 private:
     uint VAO, VBO, EBO;
     uint texture;
-    glm::mat4 perspectiveMatrix;
+    glm::mat4 projectionMatrix;
 };
 
 

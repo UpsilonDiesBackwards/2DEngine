@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
+#include <glm/ext/matrix_transform.hpp>
 #include "engine/archetypes/camera.h"
 
 Camera::Camera(float width, float height, float zoom) : position(0.0f, 0.0f), zoom(zoom), width(width), height(height) {
@@ -32,6 +33,11 @@ glm::mat4 Camera::GetProjection() const {
 
     return glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
 }
+
+glm::mat4 Camera::GetView() const {
+    return glm::translate(glm::mat4(1.0f), glm::vec3(-position.x, -position.y, 0.0f));
+}
+
 
 glm::vec2 Camera::GetPosition() const {
     return position;

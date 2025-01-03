@@ -1,5 +1,6 @@
 
 #include <iostream>
+#include <glm/ext/matrix_transform.hpp>
 #include "engine/archetypes/entity.h"
 
 Entity::Entity(const std::string &name, EntityFlags flags, Transform transform)
@@ -12,6 +13,7 @@ Entity::Entity(const std::string &name, EntityFlags flags, Transform transform)
 
 void Entity::Render() {
     if (RENDERABLE) {
+        UpdateModelMatrix();
         renderable.Draw(transform.modelMatrix);
     }
 }
@@ -38,6 +40,15 @@ glm::vec2 Entity::getScale() {
 
 glm::vec2 Entity::setScale(glm::vec2 newScale) {
     transform.scale = newScale;
+}
+
+void Entity::UpdateModelMatrix() {
+    transform.modelMatrix = glm::mat4(1.0f);
+
+    transform.modelMatrix = glm::scale(transform.modelMatrix, glm::vec3(transform.scale, 1.0f));
+    transform.modelMatrix = glm::rotate(transform.modelMatrix, glm::radians(transform.eulerRot.x),
+                                        glm::vec3(0.0f, 0.0f, 1.0f));
+    transform.modelMatrix = glm::translate(transform.modelMatrix, glm::vec3(transform.pos, 0.0f));
 }
 
 template<typename... TArgs>

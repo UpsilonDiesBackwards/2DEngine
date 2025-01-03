@@ -17,17 +17,26 @@ enum KeyEventType {
     KEY_PRESSED
 };
 
+enum MouseEventType {
+    MOUSE_DOWN,
+    MOUSE_UP,
+    MOUSE_PRESSED
+};
+
 class Input {
 public:
-    Input(InputManager* inputManager);
+    Input(InputManager *inputManager);
 
     void BindKey(int key, KeyEventType eventType, std::function<void()> action);
 
+    void BindMouseButton(int button, MouseEventType eventType, std::function<void()> action);
+
     void Update();
+
 private:
-    InputManager* inputManager;
-    std::map<std::pair<int, KeyEventType>, std::function<void()>> keybinds;
+    InputManager *inputManager;
+    std::map<std::pair<int, KeyEventType>, std::function<void()>> keyBinds;
+    std::map<std::pair<int, MouseEventType>, std::function<void()>> mouseButtonBinds;
+
 };
-
-
 #endif //ENGINE_INPUTMANAGER_H

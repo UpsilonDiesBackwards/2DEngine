@@ -7,10 +7,11 @@
 
 
 #include "engine/gui/stylemanager.h"
+#include "engine/application/profiler.h"
 
 class TopBar {
 public:
-    void Show(StyleManager* styleManager);
+    void Show(StyleManager* styleManager, Profiler* profiler);
 };
 
 

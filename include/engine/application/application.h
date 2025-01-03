@@ -14,14 +14,25 @@
 #include "engine/gui/imgui/topbar.h"
 #include "engine/io/inputmanager.h"
 #include "engine/io/input.h"
+#include "profiler.h"
+#include "engine/archetypes/camera.h"
+#include "engine/gui/editorviews.h"
 
 enum PlayState {
     Play, Stop,
 };
 
+enum EditorMode {
+    EDIT,
+    GAME,
+};
+
 class Application {
 public:
-    Application(int width, int height, const char* title);
+    static Application& GetInstance(int width = 1920, int height = 1080, const char* title = "Engine") {
+        static Application instance(width, height, title);
+        return instance;
+    }
     ~Application();
 
     void Initialise();
@@ -29,14 +40,24 @@ public:
     void Terminate();
 
     GLFWwindow* getWindow();
+    Camera* getCamera();
 
     PlayState playState = PlayState::Stop;
+    EditorMode editorMode = EditorMode::EDIT;
+
+    EditorViews* editorViews;
     EditView* editView;
     GameView* gameView;
 
     InputManager& inputManager;
     Input input;
+
+    Camera* camera;
+
+    Profiler* profiler;
 private:
+    Application(int width, int height, const char* title);
+
     GLFWwindow* window;
     int width, height;
     const char* title;

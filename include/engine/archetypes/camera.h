@@ -5,7 +5,6 @@
 #ifndef ENGINE_CAMERA_H
 #define ENGINE_CAMERA_H
 
-
 #include <glm/detail/type_vec1.hpp>
 #include <glm/fwd.hpp>
 #include <glm/detail/type_vec2.hpp>
@@ -20,6 +19,7 @@ public:
     void UpdateViewport(float width, float height);
 
     glm::mat4 GetProjection() const;
+    glm::mat4 GetView() const;
     glm::vec2 GetPosition() const;
     float GetZoom() const;
 private:

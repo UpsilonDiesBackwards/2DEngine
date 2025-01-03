@@ -23,6 +23,9 @@ public:
     double getMouseX();
     double getMouseY();
 
+    double getMouseDeltaX() const;
+    double getMouseDeltaY() const;
+
     void Update();
 
     void SetWindow(GLFWwindow* targetWindow);
@@ -33,6 +36,9 @@ private:
     bool keys[512];
     bool mouseButtons[8];
     double mouseX, mouseY;
+    double mouseDeltaX, mouseDeltaY;
+
+    double prevMouseX, prevMouseY;
 
     bool prevKeys[512];
     bool prevMouseButtons[8];
