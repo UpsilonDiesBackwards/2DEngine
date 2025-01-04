@@ -53,6 +53,10 @@ add_executable(engine
         include/engine/io/input.h
         src/engine/application/profiler.cpp
         include/engine/application/profiler.h
+        src/engine/scene/scene.cpp
+        include/engine/scene/scene.h
+        src/engine/scene/scenemanager.cpp
+        include/engine/scene/scenemanager.h
 )
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)

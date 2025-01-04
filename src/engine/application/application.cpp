@@ -13,6 +13,7 @@ Application::Application(int width, int height, const char *title) :
     window(nullptr), width(width), height(height), title(title), inputManager(InputManager::GetInstance()),
     input(&inputManager), camera(new Camera(1920, 1080, 1)) {
 
+    sceneManager = new SceneManager;
     profiler = new Profiler();
     editorViews = new EditorViews;
 };
@@ -64,6 +65,11 @@ void Application::Initialise() {
     editView = new EditView(width, height);
 
     topBar = new TopBar();
+
+    auto scene = std::make_shared<Scene>("House");
+    sceneManager->AddScene(scene);
+
+    sceneManager->SetCurrentScene("House");
 }
 
 void Application::Run() {

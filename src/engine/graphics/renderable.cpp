@@ -25,7 +25,6 @@ int rectIndices[] = {
 
 Renderable::Renderable(GLuint VAO, GLuint VBO, GLuint EBO, GLuint texture) : VAO(VAO), VBO(VBO), EBO(EBO),
                         texture(texture) {
-    projectionMatrix = glm::perspective(glm::radians(45.0f), 1920.0f / 1080.0f, 0.1f, 100.0f);
 }
 
 void Renderable::Initialise() {
@@ -63,7 +62,7 @@ void Renderable::Draw(const glm::mat4 modelMatrix) {
     }
 
     GLint projectionLoc = glGetUniformLocation(shader.ID, "projection");
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(Application::GetInstance().camera->GetProjection()));
 
     GLint viewLoc = glGetUniformLocation(shader.ID, "view");
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE,

@@ -17,6 +17,7 @@
 #include "profiler.h"
 #include "engine/archetypes/camera.h"
 #include "engine/gui/editorviews.h"
+#include "engine/scene/scenemanager.h"
 
 enum PlayState {
     Play, Stop,
@@ -52,6 +53,7 @@ public:
     InputManager& inputManager;
     Input input;
 
+    SceneManager* sceneManager;
     Camera* camera;
 
     Profiler* profiler;
