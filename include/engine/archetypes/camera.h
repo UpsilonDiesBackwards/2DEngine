@@ -26,6 +26,8 @@ private:
     glm::vec2 position;
     float zoom;
     float width, height;
+
+    float panSpeed = 0.025f;
 };
 
 

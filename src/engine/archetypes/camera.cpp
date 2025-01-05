@@ -11,8 +11,8 @@ Camera::Camera(float width, float height, float zoom) : position(0.0f, 0.0f), zo
 }
 
 void Camera::Move(float xOffset, float yOffset) {
-    position.x += xOffset;
-    position.y += yOffset;
+    position.x += xOffset * panSpeed;
+    position.y += yOffset * panSpeed;
 }
 
 void Camera::Zoom(float amount) {

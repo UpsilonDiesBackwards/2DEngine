@@ -11,7 +11,7 @@
 
 class TopBar {
 public:
-    void Show(StyleManager* styleManager, Profiler* profiler);
+    void Show();
 };
 
 

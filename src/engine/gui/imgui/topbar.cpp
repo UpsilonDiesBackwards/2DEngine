@@ -1,13 +1,9 @@
-//
-// Created by tayler on 12/12/24.
-//
-
 #include "engine/gui/imgui/topbar.h"
 #include "imgui.h"
 #include "engine/gui/stylemanager.h"
 #include "engine/application/application.h"
 
-void TopBar::Show(StyleManager* styleManager, Profiler* profiler) {
+void TopBar::Show() {
     static bool showStyleEditor = false;
     static bool showSceneCreationPopUp = false;
     static char sceneNameBuffer[32] = "";
@@ -43,7 +39,7 @@ void TopBar::Show(StyleManager* styleManager, Profiler* profiler) {
 
         if (ImGui::BeginMenu("Window")) {
             if (ImGui::MenuItem("Save Layout")) {
-                styleManager->SaveStyle();
+                Application::GetInstance().styleManager->SaveStyle();
 
                 ImGui::OpenPopup("LayoutSavePopup");
             }
@@ -58,10 +54,8 @@ void TopBar::Show(StyleManager* styleManager, Profiler* profiler) {
         float alignRight = ImGui::GetWindowWidth() - 170;
         ImGui::SameLine(alignRight);
 
-        static int fps = 60;
-        static float frameTime = 3.28f;
-
-        ImGui::Text("FPS: %d | (%.2f ms)", profiler->GetCurrentFPS(), profiler->GetCurrentFrameTime());
+        ImGui::Text("FPS: %d | (%.2f ms)", Application::GetInstance().profiler->GetCurrentFPS(),
+                    Application::GetInstance().profiler->GetCurrentFrameTime());
 
         ImGui::EndMainMenuBar();
     }
@@ -84,6 +78,13 @@ void TopBar::Show(StyleManager* styleManager, Profiler* profiler) {
         ImGui::Text("Scene Name: ");
         ImGui::InputText("##SceneName", sceneNameBuffer, sizeof(sceneNameBuffer));
 
+        if (ImGui::Button("Cancel")) {
+            memset(sceneNameBuffer, 0, sizeof(sceneNameBuffer));
+            showSceneCreationPopUp = false;
+        }
+
+        ImGui::SameLine();
+
         if (ImGui::Button("Create")) {
             std::string name = std::string(sceneNameBuffer);
 
@@ -98,19 +99,18 @@ void TopBar::Show(StyleManager* styleManager, Profiler* profiler) {
             } else { ImGui::Text("Invalid scene name."); }
         }
 
-        ImGui::SameLine();
-
-        if (ImGui::Button("Cancel")) {
-            memset(sceneNameBuffer, 0, sizeof(sceneNameBuffer));
-            showSceneCreationPopUp = false;
-        }
-
         ImGui::EndPopup();
     }
 
     if (ImGui::BeginPopupModal("Open Scene", &showSceneOpenPopUp, ImGuiWindowFlags_AlwaysAutoResize)) {
         ImGui::Text("Scene Name: ");
         ImGui::InputText("##SceneName", sceneNameBuffer, sizeof(sceneNameBuffer));
+
+        if (ImGui::Button("Cancel")) {
+            memset(sceneNameBuffer, 0, sizeof(sceneNameBuffer));
+            showSceneOpenPopUp = false;
+        }
+        ImGui::SameLine();
 
         if (ImGui::Button("Open")) {
             std::string name = std::string(sceneNameBuffer);
@@ -121,13 +121,6 @@ void TopBar::Show(StyleManager* styleManager, Profiler* profiler) {
                 memset(sceneNameBuffer, 0, sizeof(sceneNameBuffer));
                 showSceneOpenPopUp = false;
             } else { ImGui::Text("Empty or invalid scene name."); }
-        }
-
-        ImGui::SameLine();
-
-        if (ImGui::Button("Cancel")) {
-            memset(sceneNameBuffer, 0, sizeof(sceneNameBuffer));
-            showSceneOpenPopUp = false;
         }
 
         ImGui::EndPopup();

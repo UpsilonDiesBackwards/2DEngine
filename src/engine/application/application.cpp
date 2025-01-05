@@ -51,8 +51,8 @@ void Application::Initialise() {
     ImGui_ImplOpenGL3_Init("#version 430");
 
     // Load ImGui custom style
-    style = new StyleManager("../res/config/style.txt");
-    style->LoadStyle();
+    styleManager = new StyleManager("../res/config/style.txt");
+    styleManager->LoadStyle();
 
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigWindowsMoveFromTitleBarOnly = true;
@@ -89,7 +89,7 @@ void Application::Run() {
 
     editorViews->Show();
 
-    topBar->Show(style, profiler);
+    topBar->Show();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -102,7 +102,7 @@ void Application::Terminate() {
     delete editorViews;
     delete editView;
     delete gameView;
-    delete style;
+    delete styleManager;
 
     delete profiler;
 

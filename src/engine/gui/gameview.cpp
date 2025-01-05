@@ -9,6 +9,7 @@
 #include "engine/graphics/renderable.h"
 #include "engine/archetypes/entity.h"
 #include "GLFW/glfw3.h"
+#include "engine/application/application.h"
 
 /*
  * We will use a frame buffer to display a texture in an imgui window. this will allow us to have a detachable
@@ -53,7 +54,7 @@ void GameView::Render() {
         height = static_cast<int>(winSize.x / aRatio);
     }
 
-    ImGui::Image(framebuffer->GetTexture(), ImVec2(winSize.x, winSize.y), ImVec2(0, 1), ImVec2(1, 0));
+    ImGui::Image(Application::GetInstance().framebuffer->GetTexture(), ImVec2(winSize.x, winSize.y), ImVec2(0, 1), ImVec2(1, 0));
 }
 
 void GameView::Resize(int width, int height) {

@@ -7,7 +7,11 @@
 #include "imgui.h"
 #include "engine/application/application.h"
 
-EditView::EditView(int width, int height) : width(width), height(height) { framebuffer = new Framebuffer(width, height); }
+EditView::EditView(int width, int height) : width(width), height(height) {
+    framebuffer = new Framebuffer(width, height);
+
+    Application::GetInstance().framebuffer = framebuffer;
+}
 
 EditView::~EditView() { delete framebuffer; }
 
@@ -32,7 +36,7 @@ void EditView::Render() {
             float posX = app.inputManager.getMouseDeltaX();
             float posY = app.inputManager.getMouseDeltaY();
 
-            app.camera->Move(posX, posY);
+            app.camera->Move((posX), posY);
             std::cout << glm::to_string(app.camera->GetPosition()) << std::endl;
         });
     }
@@ -55,7 +59,7 @@ void EditView::Render() {
         height = static_cast<int>(winSize.x / aRatio);
     }
 
-    ImGui::Image(framebuffer->GetTexture(), ImVec2(winSize.x, winSize.y), ImVec2(0, 1), ImVec2(1, 0));
+    ImGui::Image(Application::GetInstance().framebuffer->GetTexture(), ImVec2(winSize.x, winSize.y), ImVec2(0, 1), ImVec2(1, 0));
 }
 
 void EditView::Resize(int width, int height) {

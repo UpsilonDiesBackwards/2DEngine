@@ -47,6 +47,8 @@ public:
     EditorMode editorMode = EditorMode::EDIT;
 
     EditorViews* editorViews;
+    Framebuffer* framebuffer;
+
     EditView* editView;
     GameView* gameView;
 
@@ -56,6 +58,8 @@ public:
     SceneManager* sceneManager;
     Camera* camera;
 
+    StyleManager* styleManager;
+
     Profiler* profiler;
 private:
     Application(int width, int height, const char* title);
@@ -64,7 +68,6 @@ private:
     int width, height;
     const char* title;
 
-    StyleManager* style;
     TopBar* topBar;
 };
 #endif //ENGINE_APPLICATION_H

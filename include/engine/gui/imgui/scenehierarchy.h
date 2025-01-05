@@ -1,0 +1,11 @@
+
+#ifndef ENGINE_SCENEHIERARCHY_H
+#define ENGINE_SCENEHIERARCHY_H
+
+
+class SceneHierarchy {
+
+};
+
+
+#endif //ENGINE_SCENEHIERARCHY_H
