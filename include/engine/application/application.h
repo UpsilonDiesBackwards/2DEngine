@@ -18,6 +18,7 @@
 #include "engine/archetypes/camera.h"
 #include "engine/gui/editorviews.h"
 #include "engine/scene/scenemanager.h"
+#include "engine/gui/imgui/editor.h"
 
 enum PlayState {
     Play, Stop,
@@ -27,6 +28,8 @@ enum EditorMode {
     EDIT,
     GAME,
 };
+
+class Editor;
 
 class Application {
 public:
@@ -46,8 +49,9 @@ public:
     PlayState playState = PlayState::Stop;
     EditorMode editorMode = EditorMode::EDIT;
 
-    EditorViews* editorViews;
     Framebuffer* framebuffer;
+
+    Editor* editorGUI;
 
     EditView* editView;
     GameView* gameView;
@@ -67,7 +71,5 @@ private:
     GLFWwindow* window;
     int width, height;
     const char* title;
-
-    TopBar* topBar;
 };
 #endif //ENGINE_APPLICATION_H

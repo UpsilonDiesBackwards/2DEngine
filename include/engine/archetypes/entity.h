@@ -13,6 +13,7 @@ enum EntityFlags {
     HAS_BOUNDS = 1 << 2,
     PLAYER_CONTROLLED = 1 << 3,
     RENDERABLE = 1 << 4,
+    NONE,
 };
 
 struct Transform {

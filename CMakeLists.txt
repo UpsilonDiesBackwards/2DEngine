@@ -57,8 +57,10 @@ add_executable(engine
         include/engine/scene/scene.h
         src/engine/scene/scenemanager.cpp
         include/engine/scene/scenemanager.h
-        src/engine/gui/imgui/scenehierarchy.cpp
-        include/engine/gui/imgui/scenehierarchy.h
+        src/engine/gui/imgui/sceneheirarchy.cpp
+        include/engine/gui/imgui/sceneheirarchy.h
+        src/engine/gui/imgui/editor.cpp
+        include/engine/gui/imgui/editor.h
 )
 
 target_link_libraries(engine glfw ${CMAKE_DL_LIBS} GL pthread)

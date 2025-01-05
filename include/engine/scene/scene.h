@@ -14,6 +14,8 @@ public:
     void AddEntity(std::shared_ptr<Entity> entity);
     void RemoveEntity(std::shared_ptr<Entity> entity);
 
+    std::vector<std::shared_ptr<Entity>> GetEntities();
+
     void Render();
     void Update(float deltaTime);
 

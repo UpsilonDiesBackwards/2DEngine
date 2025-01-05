@@ -15,7 +15,7 @@ Application::Application(int width, int height, const char *title) :
 
     sceneManager = new SceneManager;
     profiler = new Profiler();
-    editorViews = new EditorViews;
+    editorGUI = new Editor;
 };
 
 Application::~Application() {
@@ -64,12 +64,9 @@ void Application::Initialise() {
     gameView = new GameView(width, height);
     editView = new EditView(width, height);
 
-    topBar = new TopBar();
-
-    auto scene = std::make_shared<Scene>("House");
+    auto scene = std::make_shared<Scene>("Default");
     sceneManager->AddScene(scene);
-
-    sceneManager->SetCurrentScene("House");
+    sceneManager->SetCurrentScene("Default");
 }
 
 void Application::Run() {
@@ -87,9 +84,7 @@ void Application::Run() {
 
     input.Update();
 
-    editorViews->Show();
-
-    topBar->Show();
+    editorGUI->Render();
 
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -99,7 +94,7 @@ void Application::Run() {
 }
 
 void Application::Terminate() {
-    delete editorViews;
+    delete editorGUI;
     delete editView;
     delete gameView;
     delete styleManager;
