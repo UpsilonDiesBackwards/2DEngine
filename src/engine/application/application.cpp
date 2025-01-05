@@ -56,7 +56,7 @@ void Application::Initialise() {
 
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigWindowsMoveFromTitleBarOnly = true;
-    io.ConfigFlags |= ImGuiConfigFlags_None;
+    io.ConfigFlags |= ImGuiConfigFlags_None | ImGuiConfigFlags_DockingEnable;
     ImFont* font = io.Fonts->AddFontFromFileTTF("../res/fonts/monofur/monof55.ttf", 16);
 
     glEnable(GL_DEPTH_TEST);
