@@ -30,9 +30,9 @@ void GameView::Render() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // RENDER IN THE GAME VIEW
-
-//    Transform trans;
-//    Entity *entity = new Entity("entity", EntityFlags::RENDERABLE, trans);
+    for (const std::shared_ptr<Entity> entity : Application::GetInstance().sceneManager->GetCurrentScene()->GetEntities()) {
+        entity->Render();
+    }
 
     framebuffer->Unbind();
 

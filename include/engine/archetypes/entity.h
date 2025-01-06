@@ -37,13 +37,13 @@ public:
     Entity(const std::string& name, EntityFlags flags, Transform transform);
 
     glm::vec2 getPosition();
-    glm::vec2 setPosition(glm::vec2 newPos);
+    void setPosition(glm::vec2 newPos);
 
     glm::vec2 getEulerRot();
-    glm::vec2 setEulerRot(glm::vec2 newRot);
+    void setEulerRot(glm::vec2 newRot);
 
     glm::vec2 getScale();
-    glm::vec2 setScale(glm::vec2 newScale);
+    void setScale(glm::vec2 newScale);
 
     void UpdateModelMatrix();
 

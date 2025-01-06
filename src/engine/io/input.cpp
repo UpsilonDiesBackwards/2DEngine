@@ -37,4 +37,18 @@ void Input::Update() {
             action();
         }
     }
+
+    if (scrollAction) {
+        double scrollX = inputManager->getScrollDeltaX();
+        double scrollY = inputManager->getScrollDeltaY();
+
+        if (scrollX != 0.0 || scrollY != 0.0) {
+            scrollAction(scrollX, scrollY);
+        }
+    }
+    inputManager->resetScroll();
+}
+
+void Input::BindScroll(std::function<void(double, double)> action) {
+    scrollAction = action;
 }

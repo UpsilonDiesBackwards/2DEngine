@@ -75,6 +75,18 @@ double InputManager::getMouseDeltaY() const {
     return mouseDeltaY;
 }
 
+double InputManager::getScrollDeltaX() const {
+    return scrollDeltaX;
+}
+
+double InputManager::getScrollDeltaY() const {
+    return scrollDeltaY;
+}
+
+void InputManager::resetScroll() {
+    scrollDeltaX = 0.0f;
+    scrollDeltaY = 0.0f;
+}
 
 void InputManager::Update() {
     for (int i = 0; i < 512; i++) {
@@ -118,5 +130,11 @@ void InputManager::initMouseCallbacks() {
         InputManager& inputManager = InputManager::GetInstance();
         inputManager.mouseX = xpos;
         inputManager.mouseY = ypos;
+    });
+
+    glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset) {
+        InputManager& inputManager = InputManager::GetInstance();
+        inputManager.scrollDeltaX += xOffset;
+        inputManager.scrollDeltaY += yOffset;
     });
 }

@@ -54,6 +54,8 @@ Color 52 0.498039 0.733333 0.701961 1
 Color 53 1 1 1 0.7
 Color 54 0.8 0.8 0.8 0.2
 Color 55 0.8 0.8 0.8 0.35
+Color 56 0.8 0.8 0.8 0.2
+Color 57 0.8 0.8 0.8 0.35
 Alpha 1
 DisabledAlpha 0.6
 WindowPadding 6 6

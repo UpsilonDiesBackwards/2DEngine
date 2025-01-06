@@ -13,13 +13,12 @@ public:
     void Resize(int width, int height);
     unsigned int GetTexture() const;
 
+    int width;
+    int height;
 private:
     unsigned int fbo;
     unsigned int texture;
     unsigned int rbo;
-
-    int width;
-    int height;
 
     void InitializeFramebuffer();
 };

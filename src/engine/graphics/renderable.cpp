@@ -1,5 +1,3 @@
-
-
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
@@ -24,7 +22,8 @@ int rectIndices[] = {
 };
 
 Renderable::Renderable(GLuint VAO, GLuint VBO, GLuint EBO, GLuint texture) : VAO(VAO), VBO(VBO), EBO(EBO),
-                        texture(texture) {
+                        texture(texture),
+                        shaderProgram(Shader("../res/shaders/shader.vert", "../res/shaders/shader.frag")) {
 }
 
 void Renderable::Initialise() {
@@ -50,29 +49,16 @@ void Renderable::Initialise() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-void Renderable::Draw(const glm::mat4 modelMatrix) {
+void Renderable::Draw(glm::mat4 modelMatrix) {
     glBindVertexArray(VAO);
 
-    Shader shader("../res/shaders/shader.vert",
-                  "../res/shaders/shader.frag");
-    shader.Use();
+    shaderProgram.Use();
 
-    if (texture) {
-        glBindTexture(GL_TEXTURE_2D, texture);
-    }
-
-    GLint projectionLoc = glGetUniformLocation(shader.ID, "projection");
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(Application::GetInstance().camera->GetProjection()));
-
-    GLint viewLoc = glGetUniformLocation(shader.ID, "view");
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE,
-                       glm::value_ptr(Application::GetInstance().camera->GetView()));
-
-    GLint modelLoc = glGetUniformLocation(shader.ID, "model");
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(modelMatrix));
+    shaderProgram.SetMat4("projection", *glm::value_ptr(Application::GetInstance().camera->GetProjection()));
+    shaderProgram.SetMat4("view", *glm::value_ptr(Application::GetInstance().camera->GetView()));
+    shaderProgram.SetMat4("model", *glm::value_ptr(modelMatrix));
 
     glDrawElements(GL_TRIANGLES, sizeof(rectIndices)/4, GL_UNSIGNED_INT, nullptr);
-
     glBindVertexArray(0);
 }
 

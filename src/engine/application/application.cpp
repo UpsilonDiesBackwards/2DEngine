@@ -59,7 +59,7 @@ void Application::Initialise() {
     io.ConfigFlags |= ImGuiConfigFlags_None | ImGuiConfigFlags_DockingEnable;
     ImFont* font = io.Fonts->AddFontFromFileTTF("../res/fonts/monofur/monof55.ttf", 16);
 
-    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_DEPTH_TEST);
 
     gameView = new GameView(width, height);
     editView = new EditView(width, height);
@@ -98,6 +98,8 @@ void Application::Terminate() {
     delete editView;
     delete gameView;
     delete styleManager;
+
+    delete framebuffer;
 
     delete profiler;
 

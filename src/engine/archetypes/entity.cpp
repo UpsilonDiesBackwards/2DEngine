@@ -1,6 +1,8 @@
 
 #include <iostream>
 #include <glm/ext/matrix_transform.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 #include "engine/archetypes/entity.h"
 
 Entity::Entity(const std::string &name, EntityFlags flags, Transform transform)
@@ -13,7 +15,6 @@ Entity::Entity(const std::string &name, EntityFlags flags, Transform transform)
 
 void Entity::Render() {
     if (RENDERABLE) {
-        UpdateModelMatrix();
         renderable.Draw(transform.modelMatrix);
     }
 }
@@ -22,33 +23,36 @@ glm::vec2 Entity::getPosition() {
     return transform.pos;
 }
 
-glm::vec2 Entity::setPosition(glm::vec2 newPos) {
+void Entity::setPosition(glm::vec2 newPos) {
     transform.pos = newPos;
+    UpdateModelMatrix();
 }
 
 glm::vec2 Entity::getEulerRot() {
     return transform.eulerRot;
 }
 
-glm::vec2 Entity::setEulerRot(glm::vec2 newRot) {
+void Entity::setEulerRot(glm::vec2 newRot) {
     transform.eulerRot = newRot;
+    UpdateModelMatrix();
 }
 
 glm::vec2 Entity::getScale() {
     return transform.scale;
 }
 
-glm::vec2 Entity::setScale(glm::vec2 newScale) {
+void Entity::setScale(glm::vec2 newScale) {
     transform.scale = newScale;
+    UpdateModelMatrix();
 }
 
 void Entity::UpdateModelMatrix() {
     transform.modelMatrix = glm::mat4(1.0f);
 
-    transform.modelMatrix = glm::scale(transform.modelMatrix, glm::vec3(transform.scale, 1.0f));
+    transform.modelMatrix = glm::translate(transform.modelMatrix, glm::vec3(transform.pos, 0.0f));
     transform.modelMatrix = glm::rotate(transform.modelMatrix, glm::radians(transform.eulerRot.x),
                                         glm::vec3(0.0f, 0.0f, 1.0f));
-    transform.modelMatrix = glm::translate(transform.modelMatrix, glm::vec3(transform.pos, 0.0f));
+    transform.modelMatrix = glm::scale(transform.modelMatrix, glm::vec3(transform.scale, 1.0f));
 }
 
 template<typename... TArgs>

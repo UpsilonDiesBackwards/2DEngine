@@ -26,6 +26,10 @@ public:
     double getMouseDeltaX() const;
     double getMouseDeltaY() const;
 
+    double getScrollDeltaX() const;
+    double getScrollDeltaY() const;
+    void resetScroll();
+
     void Update();
 
     void SetWindow(GLFWwindow* targetWindow);
@@ -35,10 +39,12 @@ private:
 
     bool keys[512];
     bool mouseButtons[8];
+
     double mouseX, mouseY;
     double mouseDeltaX, mouseDeltaY;
-
     double prevMouseX, prevMouseY;
+
+    double scrollDeltaX, scrollDeltaY;
 
     bool prevKeys[512];
     bool prevMouseButtons[8];

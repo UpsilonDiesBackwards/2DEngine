@@ -31,12 +31,14 @@ public:
 
     void BindMouseButton(int button, MouseEventType eventType, std::function<void()> action);
 
+    void BindScroll(std::function<void(double, double)> action);
+
     void Update();
 
 private:
     InputManager *inputManager;
     std::map<std::pair<int, KeyEventType>, std::function<void()>> keyBinds;
     std::map<std::pair<int, MouseEventType>, std::function<void()>> mouseButtonBinds;
-
+    std::function<void(double, double)> scrollAction;
 };
 #endif //ENGINE_INPUTMANAGER_H

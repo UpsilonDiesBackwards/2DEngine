@@ -14,6 +14,7 @@ void SceneHierarchy::Show() {
     // Create a new entity
     static bool showCreateEntityPopup = false;
     static char newNameBuffer[32] = "New Entity";
+    static bool showDeleteEntityPopup = false;
 
     if (ImGui::BeginPopupContextWindow("CreateEntityMenu", ImGuiPopupFlags_MouseButtonRight)) {
         if (ImGui::MenuItem("Create Entity")) {
@@ -36,12 +37,15 @@ void SceneHierarchy::Show() {
         ImGui::SameLine();
 
         if (ImGui::Button("Create")) {
-            Transform defaultTransform;
-            Entity *newEntity = new Entity(newNameBuffer, EntityFlags::NONE, defaultTransform);
-            currentScene->AddEntity(std::shared_ptr<Entity>(newEntity));
+            std::string name = std::string(newNameBuffer);
 
-            showCreateEntityPopup = false;
-            memset(newNameBuffer, 0, sizeof(newNameBuffer));
+            if (!name.empty()) {
+                Transform defaultTransform;
+                Entity *newEntity = new Entity(newNameBuffer, EntityFlags::NONE, defaultTransform);
+                currentScene->AddEntity(std::shared_ptr<Entity>(newEntity));
+
+                showCreateEntityPopup = false;
+            } else { ImGui::Text("Invalid entity name."); }
         }
         ImGui::EndPopup();
     }
@@ -52,15 +56,39 @@ void SceneHierarchy::Show() {
         ImGui::PushID(static_cast<int>(i));
 
         if (ImGui::TreeNode(entity->name.c_str())) {
+            ImGui::SameLine(0);
+            if (ImGui::Button("X")) {
+                showDeleteEntityPopup = true;
+            }
+
+            if (showDeleteEntityPopup) {
+                ImGui::OpenPopup("Delete Entity Confirmation");
+            }
+
+            if (ImGui::BeginPopupModal("Delete Entity Confirmation", &showDeleteEntityPopup, ImGuiWindowFlags_AlwaysAutoResize)) {
+                ImGui::Text("Are you sure you want to delete this entity");
+
+                if (ImGui::Button("Cancel")) {
+                    showDeleteEntityPopup = false;
+                }
+
+                ImGui::SameLine();
+                if (ImGui::Button("Confirm")) {
+                    currentScene->RemoveEntity(entity);
+                    showDeleteEntityPopup = false;
+                }
+                ImGui::EndPopup();
+            }
+
             // TRANSFORM
             if (ImGui::InputFloat2("Position", &entity->transform.pos[0])) {
-                entity->UpdateModelMatrix();
+                entity->setPosition(glm::vec2(entity->transform.pos[0], entity->transform.pos[1]));
             }
             if (ImGui::InputFloat2("Rotation", &entity->transform.eulerRot[0])) {
-                entity->UpdateModelMatrix();
+                entity->setEulerRot(glm::vec2(entity->transform.eulerRot[0], entity->transform.eulerRot[1]));
             }
             if (ImGui::InputFloat2("Scale", &entity->transform.scale[0])) {
-                entity->UpdateModelMatrix();
+                entity->setScale(glm::vec2(entity->transform.scale[0], entity->transform.scale[1]));
             }
 
             ImGui::Separator();

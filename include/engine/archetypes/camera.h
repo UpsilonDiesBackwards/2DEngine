@@ -11,7 +11,7 @@
 
 class Camera {
 public:
-    Camera(float width, float height, float zoom = 1.0f);
+    Camera(float width, float height, float zoom = 0.0f);
 
     void Move(float xOffset, float yOffset);
     void Zoom(float amount);
@@ -21,11 +21,14 @@ public:
     glm::mat4 GetProjection() const;
     glm::mat4 GetView() const;
     glm::vec2 GetPosition() const;
+
     float GetZoom() const;
 private:
     glm::vec2 position;
     float zoom;
     float width, height;
+
+    glm::mat4 viewMatrix, projectionMatrix;
 
     float panSpeed = 0.025f;
 };

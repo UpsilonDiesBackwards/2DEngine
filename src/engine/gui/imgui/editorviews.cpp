@@ -49,8 +49,9 @@ void EditorViews::Show() {
     draw_list->AddRectFilled(p1, p2, IM_COL32(39, 46, 51, 255));
 
     ImGui::SetCursorPos(ImVec2(4, ImGui::GetWindowHeight() - status_bar_height));
-    ImGui::Text("Cursor Pos: (X: %.1f, Y: %.1f ) | Play State: %s | Editor Mode: %s | Scene: %s",
+    ImGui::Text("Cursor: (X: %.1f, Y: %.1f ) (%.1f) | Play State: %s | Editor Mode: %s | Scene: %s",
                 (application.camera->GetPosition()[0]), application.camera->GetPosition()[1],
+                application.camera->GetZoom(),
                 (application.playState == PlayState::Play ? "Playing" : "Stopped"),
                 (application.editorMode == EditorMode::EDIT ? "Edit" : "Game"),
                 (application.sceneManager->GetCurrentScene()->GetName().c_str()));

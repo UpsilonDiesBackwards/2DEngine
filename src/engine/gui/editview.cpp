@@ -18,13 +18,25 @@ EditView::~EditView() { delete framebuffer; }
 void EditView::Render() {
     framebuffer->Bind();
 
-    float aRatio = static_cast<float>(width) / static_cast<float>(height);
-
-    glViewport(0, 0, width, height);
+    glEnable(GL_DEPTH_TEST);
     glClearColor(0.18f, 0.21f, 0.23f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    ImVec2 size = ImGui::GetContentRegionAvail();
+    int newWidth = static_cast<int>(size.x);
+    int newHeight = static_cast<int>(size.y);
+
+    if (newWidth != framebuffer->width || newHeight != framebuffer->height) {
+        framebuffer->Resize(newWidth, newHeight);
+        Application::GetInstance().camera->UpdateViewport(newWidth, newHeight);
+    }
+
+    glViewport(0, 0, newWidth, newHeight);
+
     // Render Space
+    for (const std::shared_ptr<Entity> entity : Application::GetInstance().sceneManager->GetCurrentScene()->GetEntities()) {
+        entity->Render();
+    }
 
     framebuffer->Unbind();
 
@@ -35,29 +47,16 @@ void EditView::Render() {
             float posY = app.inputManager.getMouseDeltaY();
 
             app.camera->Move((posX), posY);
-            std::cout << glm::to_string(app.camera->GetPosition()) << std::endl;
+        });
+
+        app.input.BindScroll([&app](double xOffset, double yOffset) {
+            app.camera->Zoom(yOffset);
         });
     }
 
-    ImVec2 winSize = ImGui::GetContentRegionAvail();
-    float wRatio = winSize.x / winSize.y;
+    glBindTexture(GL_TEXTURE_2D, framebuffer->GetTexture());
 
-    if (winSize.x != width || winSize.y != height) {
-        width = static_cast<int>(winSize.x);
-        height = static_cast<int>(winSize.y);
-        Resize(width, height);
-    }
-
-    // Retain Aspect Ratio
-    if (wRatio > aRatio) {
-        width = static_cast<int>(winSize.y * aRatio);
-        height = static_cast<int>(winSize.y);
-    } else {
-        width = static_cast<int>(winSize.x);
-        height = static_cast<int>(winSize.x / aRatio);
-    }
-
-    ImGui::Image(Application::GetInstance().framebuffer->GetTexture(), ImVec2(winSize.x, winSize.y), ImVec2(0, 1), ImVec2(1, 0));
+    ImGui::Image(Application::GetInstance().framebuffer->GetTexture(), ImVec2(size.x, size.y), ImVec2(0, 1), ImVec2(1, 0));
 }
 
 void EditView::Resize(int width, int height) {
