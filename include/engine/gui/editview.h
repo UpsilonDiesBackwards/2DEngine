@@ -4,6 +4,7 @@
 
 
 #include "framebuffer.h"
+#include "imgui.h"
 
 class EditView {
 public:
@@ -15,6 +16,7 @@ public:
 private:
     Framebuffer* framebuffer;
     int width, height;
+    ImVec2 imageMin, imageMax;
 };
 
 

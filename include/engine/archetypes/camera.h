@@ -30,7 +30,7 @@ private:
 
     glm::mat4 viewMatrix, projectionMatrix;
 
-    float panSpeed = 0.025f;
+    float panSpeed = 0.25f;
 };
 
 

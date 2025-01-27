@@ -6,6 +6,9 @@
 #include "glad/glad.h"
 #include <glm/gtc/type_ptr.hpp>
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
+
 Shader::Shader(const char *vPath, const char *fPath) {
     std::string vCode;
     std::string fCode;
@@ -73,7 +76,8 @@ void Shader::SetFloat(const std::string& name, float value) const {
 }
 
 void Shader::SetMat4(const std::string& name, const glm::mat4& mat) const {
-    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(mat));
+    int loc = glGetUniformLocation(ID, name.c_str());
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(mat));
 }
 
 void Shader::GetError(unsigned int shader, std::string type) {

@@ -27,24 +27,28 @@ void Camera::UpdateViewport(float newWidth, float newHeight) {
 }
 
 glm::mat4 Camera::GetProjection() {
-    float halfWidth = width / glm::abs(zoom);
-    float halfHeight = height / glm::abs(zoom);
+//    float halfWidth = width / glm::abs(zoom);
+//    float halfHeight = height / glm::abs(zoom);
+//
+//    float left = position.x - (halfWidth / 2.0f);
+//    float right = position.x + (halfWidth / 2.0f);
+//    float bottom = position.y - (halfHeight / 2.0f);
+//    float top = position.y + (halfHeight / 2.0f);
+//
+//    glm::mat4 proj = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+//    return proj;
 
-    float left = position.x - (halfWidth / 2.0f);
-    float right = position.x + (halfWidth / 2.0f);
-    float bottom = position.y - (halfHeight / 2.0f);
-    float top = position.y + (halfHeight / 2.0f);
+    float left = -10.0f;         // Left side of the view volume
+    float right = 10.0f;         // Right side of the view volume
+    float bottom = -10.0f;       // Bottom side of the view volume
+    float top = 10.0f;           // Top side of the view volume
+    float nearPlane = 0.1f;      // Near clipping plane
+    float farPlane = 100.0f;     // Far clipping plane
 
-    std::cout << "Projection bounds: left=" << left
-              << " right=" << right
-              << " bottom=" << bottom
-              << " top=" << top
-              << std::endl;
-
-    glm::mat4 proj = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
-    std::cout << "Projection matrix: " << glm::to_string(proj) << std::endl;
-
-    return proj;
+// Generate the orthographic projection matrix
+    glm::mat4 projectionMatrix = glm::ortho(left, right, bottom, top, nearPlane, farPlane);
+    glm::mat4 projection = glm::ortho(0.0f, 10.0f, 10.0f, 0.0f, -1.0f, 1.0f);
+    return projection;
 }
 
 

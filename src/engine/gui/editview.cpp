@@ -7,6 +7,8 @@
 #include "imgui.h"
 #include "engine/application/application.h"
 
+#include <functional>
+
 EditView::EditView(int width, int height) : width(width), height(height) {
     framebuffer = new Framebuffer(width, height);
 
@@ -38,25 +40,39 @@ void EditView::Render() {
         entity->Render();
     }
 
+    Application::GetInstance().framebuffer = framebuffer;
+
     framebuffer->Unbind();
 
     Application& app = Application::GetInstance();
     if (app.editorMode == EditorMode::EDIT) {
-        app.input.BindMouseButton(GLFW_MOUSE_BUTTON_RIGHT, MOUSE_PRESSED, [&app](){
-            float posX = app.inputManager.getMouseDeltaX();
-            float posY = app.inputManager.getMouseDeltaY();
+            app.input.BindMouseButton(GLFW_MOUSE_BUTTON_RIGHT, MOUSE_PRESSED,
+                                      [&app, this]() {
 
-            app.camera->Move((posX), posY);
-        });
+                ImVec2 mousePos = ImGui::GetMousePos();
 
-        app.input.BindScroll([&app](double xOffset, double yOffset) {
-            app.camera->Zoom(yOffset);
-        });
+                if (mousePos.x >= imageMin.x && mousePos.x <= imageMax.x &&
+                    mousePos.y >= imageMin.y && mousePos.y <= imageMax.y) {
+
+                    float posX = app.inputManager.getMouseDeltaX();
+                    float posY = app.inputManager.getMouseDeltaY();
+
+                    app.camera->Move(-posX, -posY);
+                }
+
+            });
+
+            app.input.BindScroll([&app](double xOffset, double yOffset) {
+                app.camera->Zoom(yOffset);
+            });
     }
 
     glBindTexture(GL_TEXTURE_2D, framebuffer->GetTexture());
 
     ImGui::Image(Application::GetInstance().framebuffer->GetTexture(), ImVec2(size.x, size.y), ImVec2(0, 1), ImVec2(1, 0));
+
+    imageMin = ImGui::GetWindowPos();
+    imageMax = ImVec2(ImGui::GetWindowPos()[0] + ImGui::GetWindowSize()[0], ImGui::GetWindowPos()[1] + ImGui::GetWindowSize()[1]);
 }
 
 void EditView::Resize(int width, int height) {
