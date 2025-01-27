@@ -1,11 +1,9 @@
-//
-// Created by tayler on 24/12/24.
-//
-
 #include <glm/glm.hpp>
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 #include <iostream>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/string_cast.hpp>
 #include "engine/archetypes/camera.h"
 #include "engine/application/application.h"
 
@@ -28,18 +26,27 @@ void Camera::UpdateViewport(float newWidth, float newHeight) {
     height = newHeight;
 }
 
-glm::mat4 Camera::GetProjection() const {
-    float left = position.x - (width / 2.0f) / zoom;
-    float right = position.x + (width / 2.0f) / zoom;
-    float bottom = position.y - (height / 2.0f) / zoom;
-    float top = position.y + (height / 2.0f) / zoom;
+glm::mat4 Camera::GetProjection() {
+    float halfWidth = width / glm::abs(zoom);
+    float halfHeight = height / glm::abs(zoom);
 
-    return glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+    float left = position.x - (halfWidth / 2.0f);
+    float right = position.x + (halfWidth / 2.0f);
+    float bottom = position.y - (halfHeight / 2.0f);
+    float top = position.y + (halfHeight / 2.0f);
+
+    std::cout << "Projection bounds: left=" << left
+              << " right=" << right
+              << " bottom=" << bottom
+              << " top=" << top
+              << std::endl;
+
+    glm::mat4 proj = glm::ortho(left, right, bottom, top, -1.0f, 1.0f);
+    std::cout << "Projection matrix: " << glm::to_string(proj) << std::endl;
+
+    return proj;
 }
 
-glm::mat4 Camera::GetView() const {
-    return glm::translate(glm::mat4(1.0f), glm::vec3(-position.x, -position.y, 0.0f));
-}
 
 glm::vec2 Camera::GetPosition() const {
     return position;

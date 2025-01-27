@@ -11,7 +11,7 @@
 
 Application::Application(int width, int height, const char *title) :
     window(nullptr), width(width), height(height), title(title), inputManager(InputManager::GetInstance()),
-    input(&inputManager), camera(new Camera(1920, 1080, 1)) {
+    input(&inputManager), camera(new Camera(1920, 1080, 1.0f)) {
 
     sceneManager = new SceneManager;
     profiler = new Profiler();
@@ -67,6 +67,10 @@ void Application::Initialise() {
     auto scene = std::make_shared<Scene>("Default");
     sceneManager->AddScene(scene);
     sceneManager->SetCurrentScene("Default");
+
+    Transform defaultTransform;
+    Entity *newEntity = new Entity("test entity", EntityFlags::RENDERABLE, defaultTransform);
+    sceneManager->GetCurrentScene()->AddEntity(std::shared_ptr<Entity>(newEntity));
 }
 
 void Application::Run() {

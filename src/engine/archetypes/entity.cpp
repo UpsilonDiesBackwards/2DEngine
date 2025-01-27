@@ -47,7 +47,7 @@ void Entity::setScale(glm::vec2 newScale) {
 }
 
 void Entity::UpdateModelMatrix() {
-    transform.modelMatrix = glm::mat4(1.0f);
+    glm::mat4 modelMatrix = glm::mat4(1.0f);
 
     transform.modelMatrix = glm::translate(transform.modelMatrix, glm::vec3(transform.pos, 0.0f));
     transform.modelMatrix = glm::rotate(transform.modelMatrix, glm::radians(transform.eulerRot.x),

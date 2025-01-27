@@ -55,7 +55,6 @@ void Renderable::Draw(glm::mat4 modelMatrix) {
     shaderProgram.Use();
 
     shaderProgram.SetMat4("projection", *glm::value_ptr(Application::GetInstance().camera->GetProjection()));
-    shaderProgram.SetMat4("view", *glm::value_ptr(Application::GetInstance().camera->GetView()));
     shaderProgram.SetMat4("model", *glm::value_ptr(modelMatrix));
 
     glDrawElements(GL_TRIANGLES, sizeof(rectIndices)/4, GL_UNSIGNED_INT, nullptr);

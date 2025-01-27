@@ -1,6 +1,7 @@
 #include <iostream>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/string_cast.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "engine/gui/imgui/sceneheirarchy.h"
 #include "engine/application/application.h"
 #include "imgui.h"
@@ -41,8 +42,8 @@ void SceneHierarchy::Show() {
 
             if (!name.empty()) {
                 Transform defaultTransform;
-                Entity *newEntity = new Entity(newNameBuffer, EntityFlags::NONE, defaultTransform);
-                currentScene->AddEntity(std::shared_ptr<Entity>(newEntity));
+                Entity newEntity(newNameBuffer, EntityFlags::RENDERABLE, defaultTransform);
+                currentScene->AddEntity(std::shared_ptr<Entity>(&newEntity));
 
                 showCreateEntityPopup = false;
             } else { ImGui::Text("Invalid entity name."); }
@@ -51,7 +52,7 @@ void SceneHierarchy::Show() {
     }
 
     for (size_t i = 0; i < currentScene->GetEntities().size(); i++) {
-        auto entity= currentScene->GetEntities()[i];
+        auto &entity= currentScene->GetEntities()[i];
 
         ImGui::PushID(static_cast<int>(i));
 
@@ -81,7 +82,7 @@ void SceneHierarchy::Show() {
             }
 
             // TRANSFORM
-            if (ImGui::InputFloat2("Position", &entity->transform.pos[0])) {
+            if (ImGui::InputFloat2("Position", glm::value_ptr(entity->transform.pos))) {
                 entity->setPosition(glm::vec2(entity->transform.pos[0], entity->transform.pos[1]));
             }
             if (ImGui::InputFloat2("Rotation", &entity->transform.eulerRot[0])) {

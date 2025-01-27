@@ -7,7 +7,7 @@
 void EditorViews::Show() {
     Application& application = Application::GetInstance();
 
-    ImGui::Begin("Editor", nullptr, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
+    ImGui::Begin("Editor", nullptr, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoCollapse);
     if (ImGui::BeginTabBar("Views")) {
         ImGui::SameLine(ImGui::GetContentRegionAvail().x - 40);
         if (application.playState == PlayState::Play) {
